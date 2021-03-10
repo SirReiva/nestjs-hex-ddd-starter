@@ -21,11 +21,11 @@ Proyecto base con **Lerna** y **NestJS** Arquitectura hexagonal y DDD.
     npm run initialize
 ```
 
-#### Configure an .env file in base of .env.example
+#### Configure an .env file in base of .env.example.(in packages/backend folder)
 
-#### Check docker-compose configuration.
+#### Check docker-compose configuration.(in packages/backend folder)
 
-#### Start developing(in root backend)
+#### Start developing(in packages/backend folder)
 
 ```shell
     npm run start:dev
