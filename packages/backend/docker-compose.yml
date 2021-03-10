@@ -1,0 +1,93 @@
+version: '3.7'
+services:
+  mongodb-primary:
+    container_name: Project_dev_mongodb
+    image: docker.io/bitnami/mongodb:latest
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=localhost
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=admin
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_REPLICA_SET_NAME=pProject
+      - MONGODB_USERNAME=admin
+      - MONGODB_PASSWORD=admin
+      - MONGODB_DATABASE=Project
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
+    volumes:
+      - mongodb_data_container:/bitnami/mongodb
+    networks:
+      - mongo-compose-network
+
+  mongo-express:
+    container_name: Project_dev_mongo_express
+    image: mongo-express:latest
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: Project_dev_mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+    depends_on:
+      - mongodb-primary
+    links:
+      - mongodb-primary
+    networks:
+      - mongo-compose-network
+
+  mailhog:
+    container_name: Project_dev_mailhog
+    image: mailhog/mailhog:latest
+    ports:
+      - 1080:8025
+      - 1025:1025
+    environment:
+      MH_STORAGE: maildir
+      MH_MAILDIR_PATH: /tmp
+    volumes:
+      - maildir:/tmp
+
+  redis:
+    container_name: Project_dev_redis
+    image: redis:alpine
+    command: ['redis-server', '--appendonly', 'yes']
+    ports:
+      - 6379:6379
+    networks:
+      - redis-net
+    volumes:
+      - redis-data:/data
+
+  redis-commander:
+    container_name: Project_dev_redis_commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - '8083:8081'
+    networks:
+      - redis-net
+
+  rabbitmq:
+    container_name: Project_dev_rabbitmq
+    image: rabbitmq:management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+volumes:
+  maildir: {}
+  mongodb_data_container:
+    driver: local
+  redis-data: {}
+
+networks:
+  mongo-compose-network:
+    driver: bridge
+  redis-net:

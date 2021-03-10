@@ -1,0 +1,13 @@
+{
+	"name": "base-project",
+	"private": "true",
+	"version": "0.0.1",
+	"author": "Agencia MPD",
+	"description": "base-project",
+	"scripts": {
+		"initialize": "lerna bootstrap"
+	},
+	"devDependencies": {
+		"lerna": "^3.22.1"
+	}
+}
