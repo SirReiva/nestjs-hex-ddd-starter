@@ -16,11 +16,9 @@ import { CriteriaOperator } from '@Shared/common/domain/enums/criteria-operators
 import { CriteriaSortOptions } from '@Shared/common/domain/enums/criteria-sort-options.enum';
 import { Provinces } from '@Shared/common/domain/enums/provinces.enum';
 import { UserRoles } from '@Shared/common/domain/enums/user-roles.enum';
-import { VisitStatus } from '@Shared/common/domain/enums/visit-status.enum';
 import { Env } from '@Shared/common/infrastructure/enums/env.enum';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { join } from 'path';
-import { DateScalar } from './scalars/date.scalar';
 
 registerEnumType(ClientCompanySize, { name: 'ClientCompanySize' });
 registerEnumType(ClientDedication, { name: 'ClientDedication' });
@@ -33,7 +31,6 @@ registerEnumType(UserRoles, { name: 'UserRoles' });
 registerEnumType(BrandCatalogs, { name: 'BrandCatalogs' });
 registerEnumType(CriteriaOperator, { name: 'CriteriaOperator' });
 registerEnumType(CriteriaSortOptions, { name: 'CriteriaSortOptions' });
-registerEnumType(VisitStatus, { name: 'VisitStatus' });
 
 @Module({
 	imports: [
